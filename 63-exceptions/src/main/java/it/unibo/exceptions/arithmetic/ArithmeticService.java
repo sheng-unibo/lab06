@@ -107,7 +107,7 @@ public final class ArithmeticService {
         final var rightOperand = commandQueue.remove(operatorIndex + 1);
         final var leftOperand = commandQueue.remove(operatorIndex - 1);
         if (KEYWORDS.contains(rightOperand) || KEYWORDS.contains(leftOperand)) {
-            System.out.println(
+            throw new IllegalStateException(
                 "Expected a number, but got " + leftOperand + " and " + rightOperand + " in " + commandQueue
             );
         }
@@ -120,8 +120,7 @@ public final class ArithmeticService {
             case TIMES -> left * right;
             case DIVIDED -> left / right;
             default ->  {
-                System.out.println("Unknown operand " + operand);
-                yield Double.NaN;
+                throw new IllegalStateException("Unknown operand " + operand);
             }
         };
         commandQueue.set(operatorIndex - 1, Double.toString(result));
