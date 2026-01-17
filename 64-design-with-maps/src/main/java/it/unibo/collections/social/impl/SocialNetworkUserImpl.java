@@ -38,6 +38,7 @@ public final class SocialNetworkUserImpl<U extends User> extends UserImpl implem
      *
      * think of what type of keys and values would best suit the requirements
      */
+    private final Map<String,Set<U>> followedByGroup;
 
     /*
      * [CONSTRUCTORS]
@@ -64,12 +65,16 @@ public final class SocialNetworkUserImpl<U extends User> extends UserImpl implem
      *            application
      */
     public SocialNetworkUserImpl(final String name, final String surname, final String user, final int userAge) {
-        super(null, null, null, 0);
+        super(name, surname, user, userAge);
+        this.followedByGroup = new HashMap<>();
     }
 
     /*
      * 2) Define a further constructor where the age defaults to -1
      */
+    public SocialNetworkUserImpl(final String firstName, final String lastName, final String username) {
+        this(firstName, lastName, username, -1);
+    }
 
     /*
      * [METHODS]
@@ -78,7 +83,12 @@ public final class SocialNetworkUserImpl<U extends User> extends UserImpl implem
      */
     @Override
     public boolean addFollowedUser(final String circle, final U user) {
-        return false;
+        Set<U> circleSet = this.followedByGroup.get(circle);
+        if (!followedByGroup.containsKey(circle)) {     //cirleSet == null
+            circleSet = new HashSet<>();
+            followedByGroup.put(circle, circleSet);
+        }
+        return circleSet.add(user);
     }
 
     /**
