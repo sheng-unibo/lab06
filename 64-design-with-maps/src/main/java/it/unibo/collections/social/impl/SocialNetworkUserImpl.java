@@ -7,11 +7,12 @@ package it.unibo.collections.social.impl;
 import it.unibo.collections.social.api.SocialNetworkUser;
 import it.unibo.collections.social.api.User;
 
-import java.util.ArrayList;
+//import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
+//import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -98,11 +99,18 @@ public final class SocialNetworkUserImpl<U extends User> extends UserImpl implem
      */
     @Override
     public Collection<U> getFollowedUsersInGroup(final String groupName) {
-        return null;
+        if(followedByGroup.containsKey(groupName)) {
+            return this.followedByGroup.get(groupName);
+        }
+        return new HashSet<>();
     }
 
     @Override
     public List<U> getFollowedUsers() {
-        return null;
+        Set<U> followedUsers = new HashSet<>();
+        for(final Set<U> s : this.followedByGroup.values()) {
+            followedUsers.addAll(s);
+        }
+        return new LinkedList<>(followedUsers);
     }
 }
