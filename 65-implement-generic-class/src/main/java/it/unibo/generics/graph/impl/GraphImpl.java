@@ -82,7 +82,7 @@ public class GraphImpl<N> implements Graph<N> {
             return true;
         }
 
-        for(N next : this.nodeSet()) {
+        for(N next : edges.get(current)) {
             if(!visited.contains(next)) {
                 if(dfs(next, target, visited, path)) {
                     return true;
