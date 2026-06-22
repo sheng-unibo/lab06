@@ -100,7 +100,7 @@ public final class SocialNetworkUserImpl<U extends User> extends UserImpl implem
     @Override
     public Collection<U> getFollowedUsersInGroup(final String groupName) {
         if(followedByGroup.containsKey(groupName)) {
-            return this.followedByGroup.get(groupName);
+            return new HashSet<>(this.followedByGroup.get(groupName));
         }
         return new HashSet<>();
     }
